@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path')
+const fs = require("fs");
+const path = require("path");
 
 const users = [
   {
@@ -15,8 +15,6 @@ const users = [
     password: "12345",
   },
 ];
-
-const userDir = 
 
 const getUsers = () => users;
 

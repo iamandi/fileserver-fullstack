@@ -64,15 +64,11 @@ router.post(
   //validateCategoryId,
   //imageResize,
   //],
-  //upload.single("avatar"),
-  multer(setMulterConfig(req.user.userId)).single("avatar"),
+  upload.single("avatar"),
   (req, res) => {
     const listing = {};
-    listing.images = [req.file.originalname]; //req.images.map((fileName) => ({ fileName: fileName }));
-    if (req.body.location) listing.location = JSON.parse(req.body.location);
-    if (req.user) listing.userId = req.user.userId;
-
-    //store.addListing(listing);
+    listing.images = [req.file.originalname];
+    store.addListing(listing);
 
     res.status(201).send(listing);
   }
