@@ -16,6 +16,24 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+const setMulterConfig = (userId) => {
+  const tmpPath = `uploads/${userId}/`; //path.resolve(__dirname, "..", "..", "tmp");
+  return {
+    dest: tmpPath,
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, tmpPath);
+      },
+      filename: (req, file, cb) => {
+        cb(null, file.originalname);
+      },
+      limits: function (req, file, cb) {
+        cb(null, "25 * 1024 * 1024");
+      },
+    }),
+  };
+};
+
 router.get("/", auth, (req, res) => {
   const uploadPage = `
   <html>
@@ -46,7 +64,8 @@ router.post(
   //validateCategoryId,
   //imageResize,
   //],
-  upload.single("avatar"),
+  //upload.single("avatar"),
+  multer(setMulterConfig(req.user.userId)).single("avatar"),
   (req, res) => {
     const listing = {};
     listing.images = [req.file.originalname]; //req.images.map((fileName) => ({ fileName: fileName }));

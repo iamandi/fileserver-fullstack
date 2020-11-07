@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path')
+
 const users = [
   {
     id: 1,
@@ -13,6 +16,8 @@ const users = [
   },
 ];
 
+const userDir = 
+
 const getUsers = () => users;
 
 const getUserById = (id) => users.find((user) => user.id === id);
@@ -22,6 +27,8 @@ const getUserByEmail = (email) => users.find((user) => user.email === email);
 const addUser = (user) => {
   user.id = users.length + 1;
   users.push(user);
+  /// create user's own directory
+  fs.mkdirSync(path.join(__dirname, `../uploads/${user.id}/`));
 };
 
 module.exports = {
